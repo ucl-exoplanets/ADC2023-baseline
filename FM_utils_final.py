@@ -71,8 +71,7 @@ def compute_sample_quantiles(func, samples, quantiles):
     total_samples = samples.shape[0]
     left_index, fractional = compute_quantile_indices(total_samples, quantiles)
     partial_loop_func = partial(loop_func, func = func, samples = samples)
-    quantile_result = Parallel(n_jobs=5, prefer='threads')(delayed(partial_loop_func)(l,f) for l,f in tqdm(zip(left_index, fractional),desc=" inner", total=len(fractional),position=1,leave=True))
-#     quantile_result = [partial_loop_func(l,f) for l,f in zip(left_index, fractional)]
+    quantile_result = [partial_loop_func(l,f) for l,f in zip(left_index, fractional)]
 
     return quantile_result
 
